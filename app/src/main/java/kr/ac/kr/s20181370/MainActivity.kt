@@ -1,0 +1,29 @@
+package kr.ac.kr.s20181370
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import androidx.activity.view
+import androidx.lifecycle.Observer
+import kr.ac.kr.s20181370.databinding.ActivityMainBinding
+
+class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    private val model: CounterViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        //setContentView(R.layout.activity_main)
+        setContentView(binding.root)
+        binding.txtCount.text = model.count.toString()
+
+        model.count.observe(this, Observer {
+            binding.txtCount.text = it.toString()
+        })
+
+        binding.btnAdd.setOnClickListener {
+            model.add()
+            //binding.txtCount.text = model.count.toString()
+        }
+    }
+}
